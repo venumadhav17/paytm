@@ -115,16 +115,14 @@ router.put("/", authMiddleware, async (req, res) => {
 });
 
 router.get("/bulk", authMiddleware, async (req, res) => {
-  console.log(req.query);
   const filter = req.query.filter || "";
-  console.log(filter);
   const users = await User.find({
     $or: [
       { firstName: { $regex: filter, $options: "i" } },
-      { lastName: { $regex: filter, $options: "i" } }
+      { lastName: { $regex: filter, $options: "i" } },
+      { username: { $regex: filter, $options: "i" } }
     ]
   });
-  console.log(users);
 
   res.json({
     user: users.map((user) => ({
