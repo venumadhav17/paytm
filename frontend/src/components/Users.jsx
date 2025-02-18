@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./Button";
+import axios from "axios";
 
 export function Users() {
-  const [users, setUsers] = useState([
-    {
+  const [users, setUsers] = useState([]);
+  console.log(users);
+  /*{
       firstName: "Harkirat",
       lastName: "Singh",
       _id: 1
-    }
-  ]);
+    }*/
+
+  useEffect(() => {
+    console.log(localStorage.getItem("token"));
+    axios.get("http://localhost:3000/api/v1/user/bulk").then((response) => {
+      setUsers(response.data);
+    });
+  }, []);
+
   return (
     <>
       <div className='px-3'>
@@ -21,7 +30,6 @@ export function Users() {
       </div>
       <div>
         {users.map((user) => (
-          // eslint-disable-next-line react/jsx-key
           <User user={user} />
         ))}
       </div>

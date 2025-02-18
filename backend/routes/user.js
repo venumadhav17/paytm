@@ -15,7 +15,6 @@ const signUpBody = zod.object({
 
 router.post("/signup", async (req, res) => {
   const body = req.body;
-  //console.log(body);
   const { success } = signUpBody.safeParse(req.body);
   if (!success) {
     return res.status(411).json({
